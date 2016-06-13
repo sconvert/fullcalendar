@@ -1,0 +1,59 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>TEST full calendar</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href='css/modal_tmp.css' rel='stylesheet' />
+        <link href='css/fullcalendar.css' rel='stylesheet' />
+        <link href='css/fullcalendar.print.css' rel='stylesheet' media='print' />
+        <script src='js/vendor/moment.min.js'></script>
+        <script src='js/vendor/jquery-1.12.0.min.js'></script>
+        <script src='js/vendor/fullcalendar.min.js'></script>
+        <script src="js/script.js"></script>
+
+        <style>
+
+        	body {
+        		margin: 40px 10px;
+        		padding: 0;
+        		font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+        		font-size: 14px;
+        	}
+
+        	#calendar {
+        		max-width: 900px;
+        		margin: 0 auto;
+        	}
+
+        </style>
+        </head>
+
+        <body>
+<div id="test">
+</div>
+         <div id="popupEvent" class="popup_block">
+            <a href="#" class="close"><img src="img/close_pop.png" class="btn_close" title="Close Window" alt="Close"></a>
+	           <h2 id="popupTitle">Popup #1</h2> <!-- Contenu en jQuery -->
+             <!-- Alternativement le form ou le div. L'autre en display none -->
+             <form id="newEvent">
+               Date début <input type="date" id="eventDatebegin"><br>
+               Date fin <input type="date" id="eventDateend"><br>
+               Titre événement <input type="text" id="eventTitle"><br>
+               Description <textarea id="eventDescription">Description saisie.</textarea>
+               <input type="submit" value="Valider" id="validateEventbutton">
+             </form>
+             <form id="returnEvent">
+               <span id="texteAjax"></span>
+               <br />
+               <input type="submit" value="Ok" id="okbutton">
+             </form>
+          </div>
+
+          	<div id='calendar'></div>
+
+    </body>
+</html>
