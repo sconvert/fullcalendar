@@ -1,2 +1,2 @@
 # fullcalendar
-An implementation of [http://fullcalendar.io/](fullcalendar)
+An implementation of [fullcalendar](http://fullcalendar.io/)
