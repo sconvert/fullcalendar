@@ -12,21 +12,25 @@ $(document).ready(function() {
     // Default date = today
     defaultDate: $.fullCalendar.moment(new Date()).format(),
     defaultView: 'month',
-    selectable: true,
+    selectable: {
+      month: false,
+      agenda: true
+   },
     selectHelper: false,
-    businessHours: {
+    /*businessHours: {
       start: '10:00',
       end: '18:00',
       dow: [ 1, 2, 3, 4, 5 ]
       },
-    selectConstraint: 'businessHours', // Ca, ça marche, mais du coup, on ne peut pas sélectionner une journée.
+    selectConstraint: 'businessHours', // Ca, ça marche, mais du coup, on ne peut pas sélectionner une journée.*/
 
     dayClick: function(date, jsEvent, view) {
       //if ($.fullCalendar.businessHours.contains(date)) console.log ("ok");
+        jsEvent.preventDefault();
         console.log( $('#calendar').fullCalendar('businessHours'));
         if (view.name === "month") {
-            $('#calendar').fullCalendar('gotoDate', date);
-            $('#calendar').fullCalendar('changeView', 'agendaDay');
+          $('#calendar').fullCalendar('changeView', 'agendaDay');
+          $('#calendar').fullCalendar('gotoDate', date);
         }
       },
 
@@ -35,7 +39,7 @@ $(document).ready(function() {
     },
     editable: false, // Other events may not be moved.
     eventLimit: true, // allow "more" link when too many events
-    events: 'http://localhost/webians/fullCalendar/bdrest.json'
+    events: 'bdrest.json'
   });
 
 
@@ -43,13 +47,17 @@ $(document).ready(function() {
   ////////////////// EVENTS TREATMENT  ///////////////////
   ////////////////////////////////////////////////////////
   function addEventData(start, end) {
-    var d, e;
-alert(start + " " + end);
-    d = $.fullCalendar.moment(start).format();
-    e = $.fullCalendar.moment(end).format();
-    alert($.fullCalendar.moment(start) + " " + $.fullCalendar.moment(end));
+    var b, e, actualView = $('#calendar').fullCalendar('getView');
 
-    $("#popupEvent #eventDatebegin").val(d);
+    b = $.fullCalendar.moment(start).format();
+    e = $.fullCalendar.moment(end).format();
+
+    if (actualView.type == 'month'){
+      b += "T08:00:00";
+      e += "T18:00:00";
+    }
+
+    $("#popupEvent #eventDatebegin").val(b);
     $("#popupEvent #eventDateend").val(e);
     $("#popupEvent #eventTitle").val("");
 
@@ -76,17 +84,11 @@ function validateEvent() {
     }
   $('#calendar').fullCalendar('unselect');
 
-  loadAjax("http://localhost/webians/fullCalendar/test.php", ajaxCallback, eventData);
-
-  // closeModal();
+  loadAjax("test.php", ajaxCallback, eventData);
 
   return false;
   }
 
-  /*$("#validateEventbutton").on("click", function() {
-    validateEvent();
-    return false;
-  })*/
 
   $("#newEvent").on("submit", function() {
     validateEvent();
@@ -142,12 +144,6 @@ function closeModal() {
     return false;
   })
 
-/*  $("popupEvent").find("#returnEvent").on("submit", function() {
-    alert("Vu");
-    closeModal();
-    return false;
-  })*/
-
 });
 
 ////////////////////////////////////////////////////////
@@ -188,9 +184,4 @@ function loadAjax(url, cfunc, data) {
     $(popID).find("#returnEvent").css("display", "block");
     $(popID).find("#newEvent").css("display", "none");
     $(popID).find("#texteAjax").html(mxhttp.responseText + "<br /><br />est en attente de validation.");
-//    alert("Hello from Ajax " + mxhttp.responseText);
   }
-
-/*  $("#okbutton").on("click", function() {
-    closeModal();
-  })*/
