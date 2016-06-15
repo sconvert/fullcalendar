@@ -17,22 +17,26 @@ $(document).ready(function() {
       agenda: true
    },
     selectHelper: false,
-    /*businessHours: {
+    businessHours: {
       start: '10:00',
       end: '18:00',
       dow: [ 1, 2, 3, 4, 5 ]
       },
-    selectConstraint: 'businessHours', // Ca, ça marche, mais du coup, on ne peut pas sélectionner une journée.*/
+    selectConstraint: 'businessHours', 
 
     dayClick: function(date, jsEvent, view) {
-      //if ($.fullCalendar.businessHours.contains(date)) console.log ("ok");
-        jsEvent.preventDefault();
-        console.log( $('#calendar').fullCalendar('businessHours'));
+      var bh = view.options.businessHours; // BusinessHours de la view
+
+      if (bh.dow.indexOf(date.day()) === -1) { // Si le jour cliqué ne fait pas partie des businessHours
+        alert("La salle est fermée le week-end.");
+        }
+      else {
         if (view.name === "month") {
           $('#calendar').fullCalendar('changeView', 'agendaDay');
           $('#calendar').fullCalendar('gotoDate', date);
         }
-      },
+      }
+    },
 
     select: function(start, end) {
       addEventData(start, end);
@@ -41,7 +45,6 @@ $(document).ready(function() {
     eventLimit: true, // allow "more" link when too many events
     events: 'bdrest.json'
   });
-
 
   ////////////////////////////////////////////////////////
   ////////////////// EVENTS TREATMENT  ///////////////////
