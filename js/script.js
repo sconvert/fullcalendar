@@ -22,26 +22,21 @@ $(document).ready(function() {
       end: '18:00',
       dow: [ 1, 2, 3, 4, 5 ]
       },
-    selectConstraint: 'businessHours', // Ca, ça marche, mais du coup, on ne peut pas sélectionner une journée.
+    selectConstraint: 'businessHours', 
 
     dayClick: function(date, jsEvent, view) {
-        // Check wether date is permitted
-        var mousex = jsEvent.pageX, mousey = jsEvent.pageY, offset;
-        $('td').each(function(index) {
-          offset = $(this).offset();
-          if ((offset.left + $(this).outerWidth()) > mousex && offset.left < mousex && (offset.top + $(this).outerHeight()) > mousey && offset.top < mousey) {
-            if ($(this).hasClass('fc-nonbusiness')){
-                alert("La salle est fermée le week-end.");
-            }
-            else {
-              if (view.name === "month") {
-                $('#calendar').fullCalendar('changeView', 'agendaDay');
-                $('#calendar').fullCalendar('gotoDate', date);
-              }
-            }
-          }
-        })
-      },
+      var bh = view.options.businessHours; // BusinessHours de la view
+
+      if (bh.dow.indexOf(date.day()) === -1) { // Si le jour cliqué ne fait pas partie des businessHours
+        alert("La salle est fermée le week-end.");
+        }
+      else {
+        if (view.name === "month") {
+          $('#calendar').fullCalendar('changeView', 'agendaDay');
+          $('#calendar').fullCalendar('gotoDate', date);
+        }
+      }
+    },
 
     select: function(start, end) {
       addEventData(start, end);
@@ -50,7 +45,6 @@ $(document).ready(function() {
     eventLimit: true, // allow "more" link when too many events
     events: 'bdrest.json'
   });
-
 
   ////////////////////////////////////////////////////////
   ////////////////// EVENTS TREATMENT  ///////////////////
