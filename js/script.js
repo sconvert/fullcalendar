@@ -17,21 +17,30 @@ $(document).ready(function() {
       agenda: true
    },
     selectHelper: false,
-    /*businessHours: {
+    businessHours: {
       start: '10:00',
       end: '18:00',
       dow: [ 1, 2, 3, 4, 5 ]
       },
-    selectConstraint: 'businessHours', // Ca, ça marche, mais du coup, on ne peut pas sélectionner une journée.*/
+    selectConstraint: 'businessHours', // Ca, ça marche, mais du coup, on ne peut pas sélectionner une journée.
 
     dayClick: function(date, jsEvent, view) {
-      //if ($.fullCalendar.businessHours.contains(date)) console.log ("ok");
-        jsEvent.preventDefault();
-        console.log( $('#calendar').fullCalendar('businessHours'));
-        if (view.name === "month") {
-          $('#calendar').fullCalendar('changeView', 'agendaDay');
-          $('#calendar').fullCalendar('gotoDate', date);
-        }
+        // Check wether date is permitted
+        var mousex = jsEvent.pageX, mousey = jsEvent.pageY, offset;
+        $('td').each(function(index) {
+          offset = $(this).offset();
+          if ((offset.left + $(this).outerWidth()) > mousex && offset.left < mousex && (offset.top + $(this).outerHeight()) > mousey && offset.top < mousey) {
+            if ($(this).hasClass('fc-nonbusiness')){
+                alert("La salle est fermée le week-end.");
+            }
+            else {
+              if (view.name === "month") {
+                $('#calendar').fullCalendar('changeView', 'agendaDay');
+                $('#calendar').fullCalendar('gotoDate', date);
+              }
+            }
+          }
+        })
       },
 
     select: function(start, end) {
