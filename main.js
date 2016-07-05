@@ -1,6 +1,7 @@
 $(document).ready(function() {//FULL CALENDAR
 
 	var calendarSelector = $('#calendar'), pagelang;
+	
 	if ($('html').attr('lang') == "en") pagelang = "en";
 	else pagelang = "fr";
 
