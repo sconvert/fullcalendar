@@ -1,6 +1,7 @@
 # fullcalendar
 An implementation of [fullcalendar](http://fullcalendar.io/)
 
+2016-10-07 - validation.js added
 - Original view : month
 - defaultDate initialized with today's date
 - selectable anywhere but month
