@@ -4,19 +4,20 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>TEST full calendar</title>
+        <title>TEST full calndar</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link href='css/modal_tmp.css' rel='stylesheet' />
         <link href='css/fullcalendar.css' rel='stylesheet' />
         <link href='css/fullcalendar.print.css' rel='stylesheet' media='print' />
+        <link href='css/validation.css' rel='stylesheet' />
         <script src='js/vendor/moment.min.js'></script>
         <script src='js/vendor/jquery-1.12.0.min.js'></script>
         <script src='js/vendor/fullcalendar.min.js'></script>
         <script src='js/vendor/lang/fr.js'></script>
-              <!--  <script src="js/script.js"></script> -->
-       <script src="main.js"></script>
+        <script src='js/vendor/jquery.validate.min.js'></script>
+        <script src="main.js"></script>
 
         <style>
 
@@ -42,12 +43,51 @@
 	           <h2 id="popupTitle">Popup #1</h2> <!-- Contenu en jQuery -->
              <!-- Alternativement le form ou le div. L'autre en display none -->
              <form id="newEvent">
-               Date début <input type="date" id="eventDatebegin"><br>
-               Date fin <input type="date" id="eventDateend"><br>
-               Titre événement <input type="text" id="eventTitle"><br>
-               Description <textarea id="eventDescription">Description saisie.</textarea>
-               <input type="submit" value="Valider" id="validateEventbutton">
-             </form>
+             <fieldset class="event-details">
+               <div class="form-group">
+                 <label for="eventTitle">Titre événement<abbr title="Required">*</abbr></label>
+                 <input class="form-control" type="text" id="eventTitle" name="eventTitle">
+               </div>
+               <div class="form-group">
+                 <label for="eventDescription">Description<abbr title="Required">*</abbr></label>
+                 <textarea class="form-control" id="eventDescription" name="eventDescription"></textarea>
+               </div>
+             </fieldset>
+             <fieldset class="event-dates">
+               <div class="form-group">
+                 <label for="eventDate">Date début<abbr title="Required">*</abbr></label>
+                 <input class="form-control" type="date" id="eventDate" name="eventDate">
+               </div>
+               <div class="form-group">
+                 <label for="eventHourbegin">Heure début<abbr title="Required">*</abbr></label>
+                 <input class="form-control" type="time" id="eventHourbegin" name="eventHourbegin">
+               </div>
+               <div class="form-group">
+                 <label for="eventHourend">Heure fin<abbr title="Required">*</abbr></label>
+                 <input class="form-control" type="time" id="eventHourend" name="eventHourend">
+               </div>
+             </fieldset>
+             <fieldset class="event-contact">
+               <div class="form-group">
+                 <label for="eventOrganizer">Nom et prénom<abbr title="Required">*</abbr></label>
+                 <input class="form-control" type="text" id="eventOrganizer" name="eventOrganizer">
+               </div>
+               <div class="form-group">
+                 <label for="eventEmail">E-mail<abbr title="Required">*</abbr></label>
+                 <input class="form-control" type="email" id="eventEmail" name="eventEmail">
+               </div>
+               <div class="form-group">
+                 <label for="eventPhone">Téléphone<abbr title="Required">*</abbr></label>
+                 <input class="form-control" type="tel" id="eventPhone" name="eventPhone">
+               </div>
+               <div class="form-group">
+                 <label for="eventHall">Réserver le hall</label>
+                 <input type="checkbox" value="1" id="eventHall" name="eventHall">
+               </div>
+             </fieldset>
+             <button id="validateEventbutton" class="btn btn-primary">Valider</button>
+           </form>
+
              <form id="returnEvent">
                <span id="texteAjax"></span>
                <br />
